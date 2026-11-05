@@ -1,0 +1,234 @@
+﻿<Window x:Class="CarParkManager.HomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="CarParkManager" Height="780" Width="1320"
+        MinHeight="650" MinWidth="1050"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="10" Padding="20" Margin="0,0,0,18">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Автопарк 'эх прокачу'" FontSize="17" FontWeight="SemiBold" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Name="UserName" Foreground="{StaticResource MutedTextBrush}"
+                               VerticalAlignment="Center" Margin="0,0,18,0" />
+                    <Button Content="Выйти" Padding="14,7" Click="LogoutClick" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="1" Name="MainTabs">
+            <TabItem x:Name="VehiclesTab" Header="Транспорт">
+                <Border Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                        CornerRadius="10" Padding="18" Margin="0,8,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="AddVehicleButton" Grid.Column="0" Content="Добавить транспорт" Style="{StaticResource PrimaryButton}"
+                                    Click="AddVehicle_Click" />
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Сортировка" Foreground="{StaticResource MutedTextBrush}"
+                                           VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <ComboBox Name="VehicleSortBox" Width="245" SelectedIndex="0">
+                                    <ComboBoxItem Content="По гос. номеру" Tag="Plate" />
+                                    <ComboBoxItem Content="По пробегу: сначала меньший" Tag="MileageAsc" />
+                                    <ComboBoxItem Content="По пробегу: сначала больший" Tag="MileageDesc" />
+                                    <ComboBoxItem Content="По году: сначала старше" Tag="YearAsc" />
+                                    <ComboBoxItem Content="По году: сначала новее" Tag="YearDesc" />
+                                    <ComboBoxItem Content="По производителю" Tag="Manufacturer" />
+                                </ComboBox>
+                                <Button Content="Сортировать" Margin="10,0,0,0" Click="SortVehicles_Click" />
+                            </StackPanel>
+                        </Grid>
+                        <DataGrid Grid.Row="1" Name="VehiclesGrid" AutoGenerateColumns="False"
+                                  IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="55" />
+                                <DataGridTextColumn Header="Гос. номер" Binding="{Binding LicensePlate}" Width="115" />
+                                <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer}" Width="140" />
+                                <DataGridTextColumn Header="Модель" Binding="{Binding Model}" Width="130" />
+                                <DataGridTextColumn Header="Год" Binding="{Binding YearOfManufacture}" Width="75" />
+                                <DataGridTextColumn Header="Пробег, км" Binding="{Binding Mileage, StringFormat=N0}" Width="105" />
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="105" />
+                                <DataGridTemplateColumn Header="ТО" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding MaintenanceBadge}" Foreground="{StaticResource DangerBrush}"
+                                                       FontWeight="SemiBold" VerticalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Последнее ТО, км" Binding="{Binding LastMaintenanceMileage, StringFormat=N0}" Width="125" />
+                                <DataGridTextColumn Header="Следующее ТО, км" Binding="{Binding NextMaintenanceMileage, StringFormat=N0}" Width="125" />
+                                <DataGridTextColumn Header="Дата последнего ТО" Binding="{Binding MaintenanceDateText}" Width="125" />
+                                <DataGridTemplateColumn Header="Действия" Width="365">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Content="Изменить" Style="{StaticResource TableActionButton}" Click="EditVehicle_Click" />
+                                                <Button Content="Удалить" Style="{StaticResource DangerActionButton}" Click="DeleteVehicle_Click" />
+                                                <Button Content="История" Style="{StaticResource TableActionButton}" Click="VehicleHistory_Click" />
+                                                <Button Content="Отметить ТО" Style="{StaticResource TableActionButton}" Click="MarkMaintenanceCompleted_Click" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <TabItem x:Name="DriversTab" Header="Водители">
+                <Border Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                        CornerRadius="10" Padding="18" Margin="0,8,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Content="Добавить водителя" Style="{StaticResource PrimaryButton}"
+                                HorizontalAlignment="Left" Margin="0,0,0,16" Click="AddDriver_Click" />
+                        <DataGrid Grid.Row="1" Name="DriversGrid" AutoGenerateColumns="False"
+                                  IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="55" />
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="*" />
+                                <DataGridTextColumn Header="Водительское удостоверение" Binding="{Binding LicenseNumber}" Width="210" />
+                                <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}" Width="150" />
+                                <DataGridTextColumn Header="Стаж, лет" Binding="{Binding Experience}" Width="90" />
+                                <DataGridTextColumn Header="Почта" Binding="{Binding Email}" Width="200" />
+                                <DataGridTemplateColumn Header="Действия" Width="365">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Content="Изменить" Style="{StaticResource TableActionButton}" Click="EditDriver_Click" />
+                                                <Button Content="Удалить" Style="{StaticResource DangerActionButton}" Click="DeleteDriver_Click" />
+                                                <Button Content="История" Style="{StaticResource TableActionButton}" Click="DriverHistory_Click" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <TabItem x:Name="RoutesTab" Header="Рейсы">
+                <Border Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                        CornerRadius="10" Padding="18" Margin="0,8,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <WrapPanel Grid.Row="0" VerticalAlignment="Bottom">
+                                <StackPanel Width="150" Margin="0,0,14,0">
+                                    <Label Content="Дата с" />
+                                    <DatePicker Name="DateFromPicker" />
+                                </StackPanel>
+                                <StackPanel Width="150" Margin="0,0,14,0">
+                                    <Label Content="Дата по" />
+                                    <DatePicker Name="DateToPicker" />
+                                </StackPanel>
+                                <StackPanel Width="245" Margin="0,0,14,0">
+                                    <Label Content="Транспортное средство" />
+                                    <ComboBox Name="VehicleFilterBox" SelectedValuePath="Id" DisplayMemberPath="Title" />
+                                </StackPanel>
+                                <StackPanel x:Name="DriverFilterPanel" Width="220" Margin="0,0,14,0">
+                                    <Label Content="Водитель" />
+                                    <ComboBox Name="DriverFilterBox" SelectedValuePath="Id" DisplayMemberPath="Title" />
+                                </StackPanel>
+                            </WrapPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,14,0,0">
+                                <Button Content="Применить" Click="ApplyRouteFilter" Margin="0,0,8,0" />
+                                <Button Content="Сбросить" Click="ResetRouteFilter" Margin="0,0,8,0" />
+                                <Button x:Name="AddRouteButton" Content="Зарегистрировать рейс" Style="{StaticResource PrimaryButton}"
+                                        Click="AddRoute_Click" />
+                            </StackPanel>
+                        </Grid>
+                        <DataGrid Grid.Row="1" Name="RoutesGrid" AutoGenerateColumns="False"
+                                  IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="55" />
+                                <DataGridTextColumn Header="Гос. номер" Binding="{Binding Vehicles.LicensePlate}" Width="115" />
+                                <DataGridTextColumn Header="Транспорт" Binding="{Binding Vehicles.Title}" Width="180" />
+                                <DataGridTextColumn Header="Водитель" Binding="{Binding Drivers.FullName}" Width="*" />
+                                <DataGridTextColumn Header="Начало" Binding="{Binding StartDate, StringFormat=dd.MM.yyyy}" Width="100" />
+                                <DataGridTextColumn Header="Окончание" Binding="{Binding EndDate, StringFormat=dd.MM.yyyy}" Width="100" />
+                                <DataGridTextColumn Header="Откуда" Binding="{Binding StartLocation}" Width="140" />
+                                <DataGridTextColumn Header="Куда" Binding="{Binding EndLocation}" Width="140" />
+                                <DataGridTextColumn Header="Расстояние, км" Binding="{Binding Distance}" Width="110" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <TabItem x:Name="MileageReportTab" Header="Отчёт по пробегу">
+                <Border Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                        CornerRadius="10" Padding="18" Margin="0,8,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" Margin="0,0,0,16">
+                            <Button DockPanel.Dock="Right" Content="Обновить" Click="RefreshMileageReport_Click" Height="30" />
+                            <TextBlock Name="MileageReportSummary" VerticalAlignment="Center" TextWrapping="Wrap"
+                                       FontWeight="SemiBold" Foreground="{StaticResource MutedTextBrush}" />
+                        </DockPanel>
+                        <DataGrid Grid.Row="1" Name="MileageReportGrid" AutoGenerateColumns="False"
+                                  IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="55" />
+                                <DataGridTextColumn Header="Гос. номер" Binding="{Binding LicensePlate}" Width="130" />
+                                <DataGridTextColumn Header="Транспортное средство" Binding="{Binding Vehicle}" Width="*" />
+                                <DataGridTextColumn Header="Текущий пробег, км" Binding="{Binding Mileage, StringFormat=N0}" Width="150" />
+                                <DataGridTextColumn Header="Последнее ТО, км" Binding="{Binding LastMaintenanceMileage, StringFormat=N0}" Width="145" />
+                                <DataGridTextColumn Header="Следующее ТО, км" Binding="{Binding NextMaintenanceMileage, StringFormat=N0}" Width="145" />
+                                <DataGridTextColumn Header="Дата последнего ТО" Binding="{Binding MaintenanceDate}" Width="145" />
+                                <DataGridTextColumn Header="Сумма расстояний рейсов, км" Binding="{Binding RouteDistance, StringFormat=N0}" Width="220" />
+                                <DataGridTextColumn Header="Техобслуживание" Binding="{Binding Maintenance}" Width="150" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

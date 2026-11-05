@@ -1,0 +1,77 @@
+﻿<Window x:Class="CarParkManager.RouteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarParkManager"
+        mc:Ignorable="d"
+        Title="Регистрация рейса" Height="720" Width="900"
+        MinHeight="660" MinWidth="820"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="22">
+        <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="1" CornerRadius="10" Padding="30">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Name="HeaderText" Text="Регистрация рейса" FontSize="22" FontWeight="SemiBold" />
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="0,24,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Транспортное средство" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="VehicleBox" SelectedValuePath="Id" DisplayMemberPath="Title" SelectedValue="{Binding VehicleId}" Margin="0,0,0,12" />
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="12,0,0,12" VerticalAlignment="Center">
+                        <TextBlock Name="VehicleError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" />
+                        <TextBlock Name="VehicleHint" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" Margin="0,3,0,0" FontSize="11" />
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Водитель" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <ComboBox Grid.Row="1" Grid.Column="1" Name="DriverBox" SelectedValuePath="Id" DisplayMemberPath="Title" SelectedValue="{Binding DriverId}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Name="DriverError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата начала" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <DatePicker Grid.Row="2" Grid.Column="1" Name="StartPicker" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Name="StartError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Дата окончания" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <DatePicker Grid.Row="3" Grid.Column="1" Name="EndPicker" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="3" Grid.Column="2" Name="EndError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Пункт отправления" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="FromBox" Text="{Binding StartLocation, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="4" Grid.Column="2" Name="FromError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Пункт назначения" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Name="ToBox" Text="{Binding EndLocation, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="5" Grid.Column="2" Name="ToError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Расстояние, км" VerticalAlignment="Center" Margin="0,0,14,0" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Name="DistanceBox" Text="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Grid.Row="6" Grid.Column="2" Name="DistanceError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,0" VerticalAlignment="Center" />
+                </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+                    <Button Content="Отмена" MinWidth="110" Click="Cancel_Click" />
+                    <Button Content="Зарегистрировать" Style="{StaticResource PrimaryButton}" MinWidth="150" Margin="10,0,0,0" Click="Save_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

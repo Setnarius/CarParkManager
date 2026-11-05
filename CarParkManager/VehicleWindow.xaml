@@ -1,0 +1,72 @@
+﻿<Window x:Class="CarParkManager.VehicleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarParkManager"
+        mc:Ignorable="d"
+        Title="Транспортное средство" Height="650" Width="900"
+        MinHeight="610" MinWidth="820"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="22">
+        <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="1" CornerRadius="10" Padding="30">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Name="HeaderText" Text="Заполните форму транспортного средства" FontSize="22" FontWeight="SemiBold" />
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="0,24,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Гос. номер" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Name="PlateBox" Text="{Binding LicensePlate, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Name="PlateError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Производитель" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="ManufacturerBox" Text="{Binding Manufacturer, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Name="ManufacturerError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Модель" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="ModelBox" Text="{Binding Model, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Name="ModelError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Год выпуска" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="YearBox" Text="{Binding YearOfManufacture, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="3" Grid.Column="2" Name="YearError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Пробег, км" VerticalAlignment="Center" Margin="0,0,14,16" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="MileageBox" Text="{Binding Mileage, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+                    <TextBlock Grid.Row="4" Grid.Column="2" Name="MileageError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,12" VerticalAlignment="Center" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Статус" VerticalAlignment="Center" Margin="0,0,14,0" />
+                    <ComboBox Grid.Row="5" Grid.Column="1" Name="StatusBox" SelectedValuePath="Content" SelectedValue="{Binding Status}">
+                        <ComboBoxItem Content="Доступен" />
+                        <ComboBoxItem Content="В ремонте" />
+                    </ComboBox>
+                    <TextBlock Grid.Row="5" Grid.Column="2" Name="StatusError" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="12,0,0,0" VerticalAlignment="Center" />
+                </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+                    <Button Content="Отмена" MinWidth="110" Click="Cancel_Click" />
+                    <Button Content="Сохранить" Style="{StaticResource PrimaryButton}" MinWidth="130" Margin="10,0,0,0" Click="Save_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

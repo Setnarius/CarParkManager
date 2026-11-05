@@ -1,0 +1,49 @@
+﻿<Application x:Class="CarParkManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:pu="https://opensource.panuon.com/wpf-ui"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <pu:StyleDictionary Includes="All" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="BorderBrush" Color="#E5E7EB" />
+            <SolidColorBrush x:Key="TextBrush" Color="DarkBlue" />
+            <SolidColorBrush x:Key="MutedTextBrush" Color="Gray" />
+            <SolidColorBrush x:Key="AccentBrush" Color="LightSeaGreen" />
+            <SolidColorBrush x:Key="AccentHoverBrush" Color="MediumSeaGreen" />
+            <SolidColorBrush x:Key="SoftBrush" Color="White" />
+            <SolidColorBrush x:Key="DangerBrush" Color="Red" />
+
+            <Style x:Key="PrimaryButton" TargetType="Button"
+                   BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+                <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Padding" Value="14,8" />
+                <Setter Property="MinHeight" Value="36" />
+                <Setter Property="pu:ButtonHelper.CornerRadius" Value="6" />
+                <Setter Property="pu:ButtonHelper.HoverBackground" Value="{StaticResource AccentHoverBrush}" />
+                <Setter Property="pu:ButtonHelper.ClickBackground" Value="#1D4ED8" />
+            </Style>
+
+            <Style x:Key="TableActionButton" TargetType="Button"
+                   BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding" Value="8,4" />
+                <Setter Property="MinHeight" Value="28" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Margin" Value="2,0" />
+                <Setter Property="pu:ButtonHelper.CornerRadius" Value="5" />
+            </Style>
+
+            <Style x:Key="DangerActionButton" TargetType="Button"
+                   BasedOn="{StaticResource TableActionButton}">
+                <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

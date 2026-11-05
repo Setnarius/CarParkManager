@@ -1,0 +1,34 @@
+﻿<Window x:Class="CarParkManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="CarParkManager — Вход" Height="620" Width="900"
+        MinHeight="560" MinWidth="760"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Border Width="420" Padding="36" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Автопарк 'эх прокачу'" FontSize="25" FontWeight="SemiBold"
+                           HorizontalAlignment="Center" Height="60" />
+
+                <TextBlock Text="Электронная почта" FontWeight="SemiBold" Margin="0,0,0,7" />
+                <TextBox Name="EmailBox" Margin="0,0,0,18" Height="30" />
+
+                <TextBlock Text="Пароль" FontWeight="SemiBold" Margin="0,0,0,7" />
+                <PasswordBox Name="PasswordInput" Margin="0,0,0,4" Height="30" />
+
+                <TextBlock Name="ErrorText" Foreground="{StaticResource DangerBrush}" Margin="0,10,0,0"
+                           TextWrapping="Wrap" HorizontalAlignment="Center" />
+
+                <Button Content="Войти" Style="{StaticResource PrimaryButton}" Margin="0,22,0,10"
+                        MinHeight="42" Click="LoginClick" />
+                <Button Content="Создать аккаунт" Background="Transparent" BorderThickness="0"
+                        Foreground="{StaticResource AccentBrush}" Click="OpenRegisterWindow_Click" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
