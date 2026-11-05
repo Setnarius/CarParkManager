@@ -1,20 +1,8 @@
 USE [master];
 GO
 
-IF DB_ID(N'FleetDB') IS NULL
-BEGIN
-    CREATE DATABASE [FleetDB];
-    PRINT N'База данных FleetDB создана.';
-END
-ELSE
-BEGIN
-    PRINT N'База данных FleetDB уже существует. Проверяю структуру.';
-END;
-GO
-
 USE [FleetDB];
 GO
-
 
 IF OBJECT_ID(N'dbo.Vehicles', N'U') IS NULL
 BEGIN
@@ -41,7 +29,6 @@ BEGIN
         CONSTRAINT CK_Vehicles_Status
             CHECK (Status IN (N'Доступен', N'В рейсе', N'В ремонте'))
     );
-    PRINT N'Таблица dbo.Vehicles создана.';
 END;
 GO
 
@@ -50,7 +37,6 @@ BEGIN
     ALTER TABLE dbo.Vehicles
     ADD LastMaintenanceMileage INT NOT NULL
         CONSTRAINT DF_Vehicles_LastMaintenanceMileage DEFAULT (0) WITH VALUES;
-    PRINT N'Добавлен столбец Vehicles.LastMaintenanceMileage.';
 END;
 GO
 
@@ -88,7 +74,6 @@ BEGIN
         CONSTRAINT UQ_Drivers_Email UNIQUE (Email),
         CONSTRAINT CK_Drivers_Experience CHECK (Experience >= 0)
     );
-    PRINT N'Таблица dbo.Drivers создана.';
 END;
 GO
 
@@ -104,7 +89,6 @@ BEGIN
         CONSTRAINT PK_Administrators PRIMARY KEY (Id),
         CONSTRAINT UQ_Administrators_Email UNIQUE (Email)
     );
-    PRINT N'Таблица dbo.Administrators создана.';
 END;
 GO
 
@@ -122,11 +106,9 @@ BEGIN
         N'Admin@manager.ru',
         N'weHdtX+UAoVWoUk1/hJEOLt6vX7GyAvxcqDGKjnwXko='
     );
-    PRINT N'Начальная учётная запись администратора добавлена.';
 END
 ELSE
 BEGIN
-    PRINT N'Учётная запись администратора уже существует — без изменений.';
 END;
 GO
 
@@ -151,7 +133,6 @@ BEGIN
         CONSTRAINT CK_Routes_Dates CHECK (EndDate >= StartDate),
         CONSTRAINT CK_Routes_Distance CHECK (Distance > 0)
     );
-    PRINT N'Таблица dbo.Routes создана.';
 END;
 GO
 
@@ -162,7 +143,4 @@ UNION ALL
 SELECT N'Administrators', COUNT(*) FROM dbo.Administrators
 UNION ALL
 SELECT N'Routes', COUNT(*) FROM dbo.Routes;
-GO
-
-PRINT N'Создание/проверка базы данных CarParkManager завершена.';
 GO
